@@ -1,30 +1,16 @@
 package com.zenfreela.zentalk.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
 import java.util.List;
 
-@Getter @Setter
+@Data
 @Document(collection = "users_talks")
-public class Talk {
-
-    @Id
-    private String id;
+public class Talk extends AbstractModel {
 
     private List<String> members;
 
     private List<Message> messages;
-
-    @CreatedDate
-    private Date createdDate;
-
-    @LastModifiedDate
-    private Date lasModifiedDate;
 
 }
