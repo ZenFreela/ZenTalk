@@ -1,7 +1,7 @@
 package com.zenfreela.zentalk.controller;
 
 import com.zenfreela.zentalk.model.Message;
-import com.zenfreela.zentalk.repository.MessageRepository;
+import com.zenfreela.zentalk.service.message.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -15,26 +15,26 @@ import static org.springframework.http.ResponseEntity.*;
 @RequestMapping("/message")
 public class MessageController {
 
-    private MessageRepository messageRepository;
+    private MessageServiceImpl messageService;
 
     @Autowired
-    public MessageController(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
+    public MessageController(MessageServiceImpl messageService) {
+        this.messageService = messageService;
     }
 
     @GetMapping(path = "", produces = "application/json")
     public ResponseEntity<Flux<Message>> findAll() {
-        return ok(messageRepository.findAll());
+        return ok(messageService.findAll());
     }
 
     @GetMapping(path = "/{email}", produces = "application/json")
     public ResponseEntity<Flux<Message>> findBySender(@PathVariable("email") @NonNull String email) {
-        return ok(messageRepository.findBySender(email));
+        return ok(messageService.findBySender(email));
     }
 
     @PostMapping(path = "", produces = "application/json")
     public ResponseEntity<Mono<Message>> save(@RequestBody @NonNull Message message) {
-        return ok(messageRepository.save(message));
+        return ok(messageService.save(message));
     }
 
 }
